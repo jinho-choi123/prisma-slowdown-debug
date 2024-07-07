@@ -1,0 +1,42 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = "mysql://tester:testpassword@localhost:3306/test"
+}
+
+model Course {
+  id                Int         @id @default(autoincrement())
+  createdAt         DateTime    @default(now())
+  lectures          Lecture[]
+  professors        Professor[]
+  reviews           Review[]
+  title             String      @db.VarChar(100)
+  title_en          String      @db.VarChar(200)
+  title_no_space    String      @db.VarChar(100)
+  title_en_no_space String      @db.VarChar(200)
+}
+
+model Lecture {
+  id       Int     @id @default(autoincrement())
+  year     Int
+  semester Int     @db.SmallInt
+  Course   Course? @relation(fields: [courseId], references: [id])
+  courseId Int?
+}
+
+model Professor {
+  id       Int     @id @default(autoincrement())
+  name     String  @db.VarChar(100)
+  Course   Course? @relation(fields: [courseId], references: [id])
+  courseId Int?
+}
+
+model Review {
+  id       Int     @id @default(autoincrement())
+  content  String  @db.MediumText
+  Course   Course? @relation(fields: [courseId], references: [id])
+  courseId Int?
+}
