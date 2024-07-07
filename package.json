@@ -1,0 +1,4 @@
+{
+  "name": "otl-server-slow-query",
+  "packageManager": "yarn@4.3.1"
+}
